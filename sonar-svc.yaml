@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonarqube
+  namespace: sonarcube
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared-{ip}
+spec:
+  type: LoadBalancer
+  loadBalancerIP: {ip}
+  ports:
+    - name: sonarport
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+    - name: elastic
+      protocol: TCP
+      port: 9001
+      targetPort: 9001
+  selector:
+    app: sonar
